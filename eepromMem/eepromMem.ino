@@ -26,40 +26,40 @@ void commands(String cmd) {
   cmd.trim();
 
   if (cmd.indexOf("-w") != -1) {
-    int address = getVal(cmd, "-a");
-    int value = getVal(cmd, "-v");
-    
-    if (address == -1 || value == -1) {
-      Serial.println("error missing address or value");
-      return;
-    }
-    
-    if (address < 0 || address >= EEPROM.length()) {
-      Serial.println("error address out of range");
-      return;
-    }
-    
-    EEPROM.write(address, value);
-    Serial.println("SUCCESS WRITE");
+  int address = getVal(cmd, "-a");
+  int value = getVal(cmd, "-v");
+  
+  if (address == -1 || value == -1) {
+    Serial.println("error missing address or value");
+    return;
+  }
+  
+  if (address < 0 || address >= EEPROM.length() - 1) {
+    Serial.println("error address out of range");
+    return;
+  }
+  
+  EEPROM.put(address, value);
+  Serial.println("SUCCESS WRITE");
     
   } else if (cmd.indexOf("-r") != -1) {
-    int address = getVal(cmd, "-a");
-    
-    if (address == -1) {
-      Serial.println("error missing address");
-      return;
-    }
-    
-    if (address < 0 || address >= EEPROM.length()) {
-      Serial.println("error address out of range");
-      return;
-    }
-    
-    byte value = EEPROM.read(address);
-    Serial.print("Value at address ");
-    Serial.print(address);
-    Serial.print(": ");
-    Serial.println(value);
+  int address = getVal(cmd, "-a");
+  
+  if (address == -1) {
+    Serial.println("error missing address");
+    return;
+  }
+  
+  if (address < 0 || address >= EEPROM.length() - 1) {
+    Serial.println("error address out of range");
+    return;
+  }
+  
+  int value = EEPROM.get(address, value);
+  Serial.print("Value at address ");
+  Serial.print(address);
+  Serial.print(": ");
+  Serial.println(value);
     
   } else if (cmd.indexOf("-e") != -1) {
     int address = getVal(cmd, "-a");
