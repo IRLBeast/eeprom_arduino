@@ -2,6 +2,8 @@
 
 #define prefix "eeprom"
 
+template <typename T> inline Print & operator << (Print &s, T n) {s.print(n); return s;}
+
 void setup() {
   Serial.begin(9600);
   delay(3000); //чтобы успеть открыть монитор порта
@@ -56,10 +58,11 @@ void commands(String cmd) {
   }
   
   int value = EEPROM.get(address, value);
-  Serial.print("Value at address ");
-  Serial.print(address);
-  Serial.print(": ");
-  Serial.println(value);
+  // Serial.print("Value at address ");
+  // Serial.print(address);
+  // Serial.print(": ");
+  // Serial.println(value);
+  Serial << "Value at address " << address << ": " << value;
     
   } else if (cmd.indexOf("-e") != -1) {
     int address = getVal(cmd, "-a");
